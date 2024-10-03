@@ -1,0 +1,39 @@
+.girda{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.carta {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+  
+  .carta:hover {
+    transform: scale(1.05);
+  }
+  
+  .carta img {
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .carta h2 {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+  }
+  
+  .carta p {
+    font-size: 1.2em;
+    color: #555;
+  }

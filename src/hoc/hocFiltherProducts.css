@@ -1,0 +1,21 @@
+.filther-products {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .filthers {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .input-buscar {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  
