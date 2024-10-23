@@ -6,7 +6,7 @@ import"./itemdetail.css"
 
 const ItemDetailContainer = () => {
   const [product, setProduct] = useState({});
-  const { idProduct} = useParams ()
+  const { idProduct} = useParams()
 
   useEffect(() => {
     getProducts()
