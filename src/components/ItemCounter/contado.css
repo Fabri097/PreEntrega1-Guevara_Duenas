@@ -1,0 +1,55 @@
+.contador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contador button {
+  padding: 10px 15px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.contador button:hover {
+  background-color: #e64a19;
+}
+
+.numero {
+  margin: 0 10px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.agregar-carrito {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.agregar-carrito button {
+  padding: 10px 20px;
+  background-color: #009688;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.agregar-carrito button:hover {
+  background-color: #00796b;
+}

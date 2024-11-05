@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import "./item.css"
 
 const Item = ({ product }) => {
+
   return (
     <div className="carta">
-      <img src={product.image} width={150} />
-      <h2>{product.name}</h2>
-      <p>precio:S/{product.price}</p>
-      <button><Link to = {"/detail/" + product.id} className="detalle" >Compre ahora</Link></button>
+      <img src={product.image[0]} className="img-item" width={150} />
+      <p className="text-item">{product.name}</p>
+      <p  className="text-item">Precio:S/{product.price}</p>
+      <button className="detalle"><Link to = {"/detail/" + product.id} className="detalle">Mas Detalles</Link></button>
     </div>
   );
 };

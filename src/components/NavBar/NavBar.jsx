@@ -10,9 +10,9 @@ const NavBar = () => {
     <>
       <div className="navContainer">
       <Link to="/">
-       <p className="brand">
+       <h1 className="brand">
         StyleSphere
-       </p>
+       </h1>
       </Link>
       
       <nav className="links">

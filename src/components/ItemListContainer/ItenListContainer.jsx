@@ -1,43 +1,58 @@
 import { useState, useEffect } from "react"
-import { getProducts } from "../../data/data";
 import ItemList from "./ItemList";
-import hocFilterProducts from "../../hoc/hocFilterProducts";
+import { collection,getDocs,query,where } from "firebase/firestore";
+import db from "../../db/db";
 import { useParams } from "react-router-dom";
 
-import useProducts from "../../hooks/useProducts";
 
 const ItemListContainer = ( ) => {
   const [products, setProducts] = useState([])
+  const [loading,setLoading] = useState ([false])
   const {idCategory } = useParams()
+  
+  const getProducts = () =>{
+   const productsRef = collection (db,"products")
+   getDocs(productsRef)
+   .then((dataDb)=>{
+
+     const productsDb = dataDb.docs.map ((productDb) =>{
+       return { id: productDb.id, ...productDb.data() }
+     })
+      setProducts(productsDb)
+   })
+  }
+
+
+  const getProductByCategory = () =>{
+   const productsRef = collection (db,"products")
+   const queryCategories = query( productsRef, where("category","==",idCategory) )
+   getDocs(queryCategories)
+     .then((dataDb) =>{
+       const productsDb = dataDb.docs.map ((productDb)=>{
+         return {id: productDb.id, ...productDb.data()}
+       })
+       setProducts(productsDb)
+     })
+  }
+
   useEffect(() => {
-    getProducts()
-      .then((data) => {
-        if(idCategory){
-          
-          const filterProducts = data.filter( (product)=> product.category === idCategory )
-          setProducts(filterProducts)
-        }else{
-          
-          setProducts(data)
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-      .finally(() => {
-        console.log("Finalizo la promesa")
-      })
+    setLoading(false)
+    
+    if (idCategory) {
+      getProductByCategory()
+    }else{
+      getProducts()
+    }
   }, [idCategory])
+
   return (
     <div className="itemListcontainer">
-      <ItemList products={products}/>
+      {
+        loading === true ?(<div>cargando....</div>) : (<ItemList products={products}/>)
+      }     
     </div>
   );
 };
 
 
-
-const ItemListContainerWithHoc = hocFilterProducts(ItemListContainer)
-
-export default ItemListContainerWithHoc
-//export default ItemListContainer;
+export default ItemListContainer;
