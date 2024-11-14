@@ -1,56 +1,74 @@
-import { createContext, useState } from "react";
 
-//creamos un contexto llamado CartContext
-const CartContext = createContext()
+
+
+import React, { createContext, useState } from 'react';
+
+const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]);
 
   const addProductInCart = (newProduct) => {
-
-   const condicion = isInCart (newProduct.id)
-    if (condicion) {   
-      const tempCart = [...cart]
-      const findIndex = tempCart.findIndex ((productCart) => productCart.id === newProduct.id)
-      tempCart [ findIndex].quantity = tempCart[findIndex].quantity + newProduct.quantity
-      setCart(tempCart)
+    const condicion = isInCart(newProduct.id);
+    if (condicion) {
+      const tempCart = [...cart];
+      const findIndex = tempCart.findIndex((productCart) => productCart.id === newProduct.id);
+      tempCart[findIndex].quantity = tempCart[findIndex].quantity + newProduct.quantity;
+      setCart(tempCart);
+    } else {
+      setCart([...cart, newProduct]);
     }
-    else{
-     setCart( [ ...cart, newProduct ] )
-    }
-  }
+  };
 
-  // funcion que devuelve true o false si el producto esta en el carrito esta en el carrito 
   const isInCart = (idProduct) => {
-    return cart.some ( (productCart) => productCart.id === idProduct )
-  }
+    return cart.some((productCart) => productCart.id === idProduct);
+  };
 
-  //cantidad total de productos
   const totalQuantity = () => {
-    const quantity = cart.reduce( (total, productCart) => total + productCart.quantity, 0)
-   return quantity
-  }
+    const quantity = cart.reduce((total, productCart) => total + productCart.quantity, 0);
+    return quantity;
+  };
 
-  //precio total de la compra
   const totalPrice = () => {
-    const price = cart.reduce( (total, productCart) => total + ( productCart.quantity * productCart.price), 0 )
-    return price
-  }
+    const price = cart.reduce((total, productCart) => total + (productCart.quantity * productCart.price), 0);
+    return price;
+  };
 
   const deleteProductById = (idProduct) => {
-    const filterProducts = cart.filter( (productCart) => productCart.id !== idProduct )
-    setCart(filterProducts)
-  }
+    const filterProducts = cart.filter((productCart) => productCart.id !== idProduct);
+    setCart(filterProducts);
+  };
 
-  const deleteCart = () =>{
-    setCart([])
-  }
+  const deleteCart = () => {
+    setCart([]);
+  };
 
-  return(
-    <CartContext.Provider value={ { cart, addProductInCart, totalQuantity, totalPrice, deleteProductById, deleteCart } } >
+
+  const increment = (id) => {
+    const tempCart = [...cart];
+    const findIndex = tempCart.findIndex((productCart) => productCart.id === id);
+    if (findIndex !== -1) {
+      tempCart[findIndex].quantity += 1;
+      setCart(tempCart);
+    }
+  };
+
+
+  const decrement = (id) => {
+    const tempCart = [...cart];
+    const findIndex = tempCart.findIndex((productCart) => productCart.id === id);
+    if (findIndex !== -1 && tempCart[findIndex].quantity > 1) {
+      tempCart[findIndex].quantity -= 1;
+      setCart(tempCart);
+    }
+  };
+
+  return (
+    <CartContext.Provider value={{ cart, addProductInCart, totalQuantity, totalPrice, deleteProductById, deleteCart, increment, decrement }}>
       {children}
     </CartContext.Provider>
-  )
-}
+  );
+};
 
-export { CartProvider, CartContext }
+export { CartProvider, CartContext };
+

@@ -19,11 +19,15 @@ const Contador = ({ stock, addProduct }) => {
   return (
     <>
       <div className="contenedor-contador">
+
         <div className="contador">
-          <button className="restar" onClick={handleClickRest}>
+          
+          <button className="restar" onClick={handleClickRest}>  
             -
           </button>
+
           <p className="numero">{contador}</p>
+
           <button className="agregar" onClick={handleClickAdd}>
             +
           </button>
@@ -34,6 +38,7 @@ const Contador = ({ stock, addProduct }) => {
             Agregar al Carrito
           </button>
         </div>
+
       </div>
     </>
   );

@@ -1,62 +1,111 @@
-.girda{
+.grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 16px;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    gap: 20px; 
+    justify-items: center;
+    margin: 20px;
+    padding: 10px;
+}
+.card {
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --main-color: #323232;
+  --main-focus: #2d8cf0;
+  width: 230px;
+  height: 300px;
+  background: var(--bg-color);
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 20px;
-  margin: 20px;
+  gap: 10px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.carta {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  .carta:hover {
-    transform: scale(1.05);
-  }
-  
-  .carta img {
-    border-radius: 8px;
-    margin-bottom: 16px;
-  }
-  
-  .carta h2 {
-    font-size: 1.5em;
-    margin-bottom: 8px;
-  }
-  
-  .carta p {
-    font-size: 1.2em;
-    color: #555;
-  }
+.card:last-child {
+  justify-content: flex-end;
+}
 
-  .detalle{
-    background-color: #1e75bc; 
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 12px;
-    transition: background-color 0.3s ease;
-  }
-  .detalle:hover {
-    background-color: #0e4674; /* Verde más oscuro */
-  }
-  
-  .detalle a {
-    color: white;
-    text-decoration: none;
-  }
+.card-img {
+ 
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+}
 
+.card-title {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--font-color);
+}
+
+.card-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--font-color-sub);
+}
+
+.card-divider {
+  width: 100%;
+  border: 1px solid var(--main-color);
+  border-radius: 50px;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--font-color);
+}
+
+.card-price span {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--font-color-sub);
+}
+
+.card-btn {
+  height: 35px;
+  background: var(--bg-color);
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  padding: 0 15px;
+  transition: all 0.3s;
+}
+
+.card-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--main-color);
+  transition: all 0.3s;
+}
+
+.card-img:hover {
+  transform: translateY(-3px);
+}
+
+.card-btn:hover {
+  border: 2px solid var(--main-focus);
+}
+
+.card-btn:hover svg {
+  fill: var(--main-focus);
+}
+
+.i {
+  width: 25px;
+  height: 25px;
+}

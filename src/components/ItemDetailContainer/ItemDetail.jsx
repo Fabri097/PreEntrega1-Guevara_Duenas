@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import Contador from "../ItemCounter/Contador";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "./itemdetail.css";
 
 const ItemDetail = ({ product }) => {
@@ -14,6 +16,7 @@ const ItemDetail = ({ product }) => {
     const productCart = { ...product, quantity: contador };
     addProductInCart(productCart);
     setShowItemContador(false);
+    toast.success("Se agregó correctamente el producto");
   };
 
   useEffect(() => {
@@ -60,15 +63,23 @@ const ItemDetail = ({ product }) => {
         {showItemContador === true ? (
           <Contador stock={product.stock} addProduct={addProduct} />
         ) : (
-          <>
-            <button className="terminar-compra">
-              <Link to="/cart">Terminar mi compra</Link>
+          <div className="buttons-ter-se">
+            <button className="terminar-compra ">
+              <span>
+                <Link className="ter" to="/cart">
+                  Terminar mi compra
+                </Link>
+              </span>
             </button>
 
             <button className="seguir-compra">
-              <Link to="/">Seguir Comprando</Link>
+              <span>
+                <Link className="segui" to="/">
+                  Seguir Comprando
+                </Link>
+              </span>
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

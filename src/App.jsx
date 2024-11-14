@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Cart from "./components/Cart/Cart";
 import Checkout from "./components/Checkout/Checkout"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
       <BrowserRouter>
         <CartProvider>
           <NavBar />
+          <ToastContainer theme="dark"/>
 
           <Routes>
             <Route path="/" element={<ItemListContainerWithHoc />} />
@@ -21,6 +24,7 @@ function App() {
             <Route path="/cart" element={<Cart />}/>
             <Route path="/checkout" element={<Checkout/>}/>
           </Routes>
+
         </CartProvider>
       </BrowserRouter>
     </div>
