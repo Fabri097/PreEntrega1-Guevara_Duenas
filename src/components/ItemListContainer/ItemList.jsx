@@ -1,11 +1,11 @@
 import Item from "./Item";
-import "./item.css"
+import "./item.css";
 
 const ItemList = ({ products }) => {
   return (
     <div className="grid">
       {products.map((product) => (
-        <Item  product ={product} key={product.id}/>
+        <Item product={product} key={product.id} />
       ))}
     </div>
   );

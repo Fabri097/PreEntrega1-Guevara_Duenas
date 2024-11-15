@@ -20,7 +20,7 @@ const ItemDetail = ({ product }) => {
   };
 
   useEffect(() => {
-    if (product && product.image) {
+    if (product && Array.isArray(product.image)) {
       setCurrentImage(product.image[0] || "");
       setImages(product.image.filter((image) => image !== product.image[0]));
     }
@@ -60,11 +60,11 @@ const ItemDetail = ({ product }) => {
         <h2 className="title-detail">{product.name}</h2>
         <p className="text-detail">{product.description}</p>
         <p className="text-detail">Precio: S/{product.price}</p>
-        {showItemContador === true ? (
+        {showItemContador ? (
           <Contador stock={product.stock} addProduct={addProduct} />
         ) : (
           <div className="buttons-ter-se">
-            <button className="terminar-compra ">
+            <button className="terminar-compra">
               <span>
                 <Link className="ter" to="/cart">
                   Terminar mi compra

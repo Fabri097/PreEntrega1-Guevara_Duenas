@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./contado.css";
+import "./contado.css"; // Corrección en el nombre del archivo CSS
 
 const Contador = ({ stock, addProduct }) => {
   const [contador, setContador] = useState(1);
@@ -19,29 +19,24 @@ const Contador = ({ stock, addProduct }) => {
   return (
     <>
       <div className="contenedor-contador">
-
         <div className="contador">
-          
-          <button className="restar" onClick={handleClickRest}>  
+          <button className="restar" onClick={handleClickRest} aria-label="Restar">
             -
           </button>
-
           <p className="numero">{contador}</p>
-
-          <button className="agregar" onClick={handleClickAdd}>
+          <button className="agregar" onClick={handleClickAdd} aria-label="Agregar">
             +
           </button>
         </div>
-
         <div className="agregar-carrito">
           <button onClick={() => addProduct(contador)}>
             Agregar al Carrito
           </button>
         </div>
-
       </div>
     </>
   );
 };
 
 export default Contador;
+

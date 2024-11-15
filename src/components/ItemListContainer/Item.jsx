@@ -7,7 +7,7 @@ const Item = ({ product }) => {
     <>
       <div className="card">
         <div className="card-img">
-          <img src={product.image[0]} className="detalles-carta" width={150} />
+          <img src={product.image[0]} className="detalles-carta" width={150} alt={product.name} />
         </div>
         <div className="card-title">{product.name}</div>
 
@@ -19,8 +19,7 @@ const Item = ({ product }) => {
           </div>
           <button className="card-btn">
             <Link to={"/detail/" + product.id}>
-              {" "}
-              <img className="i" src={Info} />
+              <img className="i" src={Info} alt="Información" />
             </Link>
           </button>
         </div>
@@ -30,3 +29,6 @@ const Item = ({ product }) => {
 };
 
 export default Item;
+
+
+

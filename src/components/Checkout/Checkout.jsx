@@ -1,29 +1,48 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import FormCheckout from "./FormCheckout";
-import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Timestamp, addDoc, collection, doc, setDoc } from "firebase/firestore";
 import db from "../../db/db";
 import { Link } from "react-router-dom";
 import validateForm from "../../utils/validateForm";
 import { toast } from "react-toastify";
-import "./formchekout.css";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import "./formcheckout.css";
 
-const checkout = () => {
+const Checkout = () => {
   const [dataForm, setDataForm] = useState({
-    fullname: " ",
-    phone: " ",
-    email: " ",
+    fullname: "",
+    phone: "",
+    email: "",
+    confirmEmail: "",
   });
   const [idOrder, setIdOrder] = useState(null);
   const { cart, totalPrice, deleteCart } = useContext(CartContext);
 
-  const handleChangeImput = (event) => {
+  const handleChangeInput = (event) => {
     setDataForm({ ...dataForm, [event.target.name]: event.target.value });
   };
 
-  const handleSubmitForm = async(event) => {
+  const validateEmail = () => {
+    const { email, confirmEmail } = dataForm;
+    if (email !== confirmEmail) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Los correos electrónicos no coinciden. Por favor, verifícalos.",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
+
+    if (!validateEmail()) {
+      return;
+    }
 
     const order = {
       buyer: { ...dataForm },
@@ -31,17 +50,17 @@ const checkout = () => {
       Date: Timestamp.fromDate(new Date()),
       total: totalPrice(),
     };
-     
+
     try {
-      const response = await validateForm(dataForm)
+      const response = await validateForm(dataForm);
 
-      if(response.status === "error") throw new error(response.message)
+      if (response.status === "error") throw new Error(response.message);
 
-      toast.success("Subiendo orden...")
+      toast.success("Subiendo orden...");
       uploadOrder(order);
     } catch (error) {
-      toast.error("Complete todos los campos",error.message)
-      console.log(error)
+      toast.error("Complete todos los campos: " + error.message);
+      console.log(error);
     }
   };
 
@@ -56,7 +75,7 @@ const checkout = () => {
   };
 
   const updateStock = () => {
-    cart.map(({ id, quanty, ...dataProduct }) => {
+    cart.forEach(({ id, quanty, ...dataProduct }) => {
       const productRef = doc(db, "products", id);
       setDoc(productRef, { ...dataProduct, stock: dataProduct.stock - quanty });
     });
@@ -69,53 +88,50 @@ const checkout = () => {
       {idOrder === null ? (
         <FormCheckout
           dataForm={dataForm}
-          handleChangeInput={handleChangeImput}
+          handleChangeInput={handleChangeInput}
           handleSubmitForm={handleSubmitForm}
         />
       ) : (
         <div className="orden">
           <div className="orden-confirmada">
-            <h2 className="in">Su orden se subió correctamente! 😁</h2>
+            <h2 className="in">¡Su orden se subió correctamente! 😁</h2>
             <p className="in">
               Por favor, guarde su número de seguimiento:{" "}
               <strong>{idOrder}</strong>
             </p>
-           
-              <Link to="/" className="link-inicio">
+            <Link to="/" className="link-inicio">
               Volver al inicio
             </Link>
-         
           </div>
-          
           <div className="loader">
-            <div className="truckWrapper">
-              <div className="truckBody">
+            <div class="truckWrapper">
+              <div class="truckBody">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 198 93"
-                  className="trucksvg"
+                  class="trucksvg"
                 >
                   <path
-                    strokeWidth="3"
+                    stroke-width="3"
                     stroke="#282828"
                     fill="#F83D3D"
                     d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z"
                   ></path>
                   <path
-                    strokeWidth="3"
+                    stroke-width="3"
                     stroke="#282828"
                     fill="#7D7C7C"
                     d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z"
                   ></path>
                   <path
-                    strokeWidth="2"
+                    stroke-width="2"
                     stroke="#282828"
                     fill="#282828"
                     d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z"
                   ></path>
                   <rect
-                    strokeWidth="2"
+                    stroke-width="2"
                     stroke="#282828"
                     fill="#FFFCAB"
                     rx="1"
@@ -125,7 +141,7 @@ const checkout = () => {
                     x="187"
                   ></rect>
                   <rect
-                    strokeWidth="2"
+                    stroke-width="2"
                     stroke="#282828"
                     fill="#282828"
                     rx="1"
@@ -135,7 +151,7 @@ const checkout = () => {
                     x="193"
                   ></rect>
                   <rect
-                    strokeWidth="3"
+                    stroke-width="3"
                     stroke="#282828"
                     fill="#DFDFDF"
                     rx="2.5"
@@ -145,7 +161,7 @@ const checkout = () => {
                     x="6.5"
                   ></rect>
                   <rect
-                    strokeWidth="2"
+                    stroke-width="2"
                     stroke="#282828"
                     fill="#DFDFDF"
                     rx="2"
@@ -156,15 +172,15 @@ const checkout = () => {
                   ></rect>
                 </svg>
               </div>
-              <div className="truckTires">
+              <div class="truckTires">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 30 30"
-                  className="tiresvg"
+                  class="tiresvg"
                 >
                   <circle
-                    strokeWidth="3"
+                    stroke-width="3"
                     stroke="#282828"
                     fill="#282828"
                     r="13.5"
@@ -177,10 +193,10 @@ const checkout = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 30 30"
-                  className="tiresvg"
+                  class="tiresvg"
                 >
                   <circle
-                    strokeWidth="3"
+                    stroke-width="3"
                     stroke="#282828"
                     fill="#282828"
                     r="13.5"
@@ -190,17 +206,17 @@ const checkout = () => {
                   <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
                 </svg>
               </div>
-              <div className="road"></div>
+              <div class="road"></div>
 
               <svg
-                xmlSpace="preserve"
+                xml:space="preserve"
                 viewBox="0 0 453.459 453.459"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns="http://www.w3.org/2000/svg"
                 id="Capa_1"
                 version="1.1"
                 fill="#000000"
-                className="lampPost"
+                class="lampPost"
               >
                 <path
                   d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993
@@ -222,4 +238,4 @@ h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"
   );
 };
 
-export default checkout;
+export default Checkout;

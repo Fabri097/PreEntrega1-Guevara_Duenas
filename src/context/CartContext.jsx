@@ -1,6 +1,3 @@
-
-
-
 import React, { createContext, useState } from 'react';
 
 const CartContext = createContext();
@@ -9,8 +6,8 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addProductInCart = (newProduct) => {
-    const condicion = isInCart(newProduct.id);
-    if (condicion) {
+    const isProductInCart = isInCart(newProduct.id);
+    if (isProductInCart) {
       const tempCart = [...cart];
       const findIndex = tempCart.findIndex((productCart) => productCart.id === newProduct.id);
       tempCart[findIndex].quantity = tempCart[findIndex].quantity + newProduct.quantity;
@@ -43,7 +40,6 @@ const CartProvider = ({ children }) => {
     setCart([]);
   };
 
-
   const increment = (id) => {
     const tempCart = [...cart];
     const findIndex = tempCart.findIndex((productCart) => productCart.id === id);
@@ -52,7 +48,6 @@ const CartProvider = ({ children }) => {
       setCart(tempCart);
     }
   };
-
 
   const decrement = (id) => {
     const tempCart = [...cart];
@@ -71,4 +66,3 @@ const CartProvider = ({ children }) => {
 };
 
 export { CartProvider, CartContext };
-

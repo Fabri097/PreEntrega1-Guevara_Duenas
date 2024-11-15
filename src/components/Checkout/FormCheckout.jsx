@@ -1,26 +1,11 @@
-import "./formchekout.css";
-import Swal from 'sweetalert2';
+import "./formcheckout.css";
 
 const FormCheckout = ({ dataForm, handleChangeInput, handleSubmitForm }) => {
-  const validateEmail = (event) => {
-    const email = document.getElementById("email").value;
-    const confirmEmail = document.getElementById("confirmEmail").value;
-    if (email !== confirmEmail) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Los correos electrónicos no coinciden. Por favor, verifícalos.",
-        footer: '<a href="#">Why do I have this issue?</a>'
-      });
-      event.preventDefault();
-    }
-  };
-
   return (
     <div className="container">
       <div className="form_area">
         <p className="title">CHECKOUT</p>
-        <form onSubmit={(event) => { validateEmail(event); handleSubmitForm(event); }}>
+        <form onSubmit={handleSubmitForm}>
           <div className="form_group">
             <label className="sub_title" htmlFor="fullname">Name</label>
             <input
@@ -29,8 +14,9 @@ const FormCheckout = ({ dataForm, handleChangeInput, handleSubmitForm }) => {
               type="text"
               id="fullname"
               name="fullname"
-              value={dataForm.fullname}
+              value={dataForm.fullname || ""}
               onChange={handleChangeInput}
+              aria-label="Nombre completo"
             />
           </div>
           <div className="form_group">
@@ -41,8 +27,9 @@ const FormCheckout = ({ dataForm, handleChangeInput, handleSubmitForm }) => {
               type="email"
               id="email"
               name="email"
-              value={dataForm.email}
+              value={dataForm.email || ""}
               onChange={handleChangeInput}
+              aria-label="Correo electrónico"
             />
           </div>
           <div className="form_group">
@@ -53,8 +40,9 @@ const FormCheckout = ({ dataForm, handleChangeInput, handleSubmitForm }) => {
               type="email"
               id="confirmEmail"
               name="confirmEmail"
-              value={dataForm.confirmEmail}
+              value={dataForm.confirmEmail || ""}
               onChange={handleChangeInput}
+              aria-label="Confirmar correo electrónico"
             />
           </div>
           <div className="form_group">
@@ -65,8 +53,9 @@ const FormCheckout = ({ dataForm, handleChangeInput, handleSubmitForm }) => {
               type="tel"
               id="phone"
               name="phone"
-              value={dataForm.phone}
+              value={dataForm.phone || ""}
               onChange={handleChangeInput}
+              aria-label="Teléfono"
             />
           </div>
           <div>

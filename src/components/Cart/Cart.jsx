@@ -17,9 +17,9 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <div className="carrito-vacio">
-        <h2> No hay productos en el carrito 😟</h2>
-        <button>
-          <Link to="/"> Volver al inicio </Link>
+        <h2>No hay productos en el carrito 😟</h2>
+        <button aria-label="Volver al inicio">
+          <Link to="/">Volver al inicio</Link>
         </button>
       </div>
     );
@@ -43,12 +43,10 @@ const Cart = () => {
                   </Link>
                   <div className="nam-pri">
                     <span>{productCart.name}</span>
-                    <p>
-                      Precio C/U: S/{productCart.price}
-                    </p>
+                    <p>Precio C/U: S/{productCart.price}</p>
                   </div>
                   <div className="quantity">
-                    <button className="incre-decre" onClick={() => decrement(productCart.id)}>
+                    <button className="incre-decre" onClick={() => decrement(productCart.id)} aria-label="Disminuir cantidad">
                       <svg
                         fill="none"
                         viewBox="0 0 24 24"
@@ -66,7 +64,7 @@ const Cart = () => {
                       </svg>
                     </button>
                     <label>{productCart.quantity}</label>
-                    <button className="incre-decre" onClick={() => increment(productCart.id)}>
+                    <button className="incre-decre" onClick={() => increment(productCart.id)} aria-label="Aumentar cantidad">
                       <svg
                         fill="none"
                         viewBox="0 0 24 24"
@@ -85,12 +83,13 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="pri-de">
-                    <label className="price small">S/{productCart.quantity * productCart.price} </label>
-                    <hr/>
+                    <label className="price small">S/{productCart.quantity * productCart.price}</label>
+                    <hr />
                     <img
                       className="delete"
                       src={Tacho}
-                      onClick={() => handleDelete(productCart.id)}                
+                      alt="Eliminar producto"
+                      onClick={() => handleDelete(productCart.id)}
                     />
                   </div>
                 </div>
@@ -105,9 +104,9 @@ const Cart = () => {
             <label className="price">
               <sup>S/</sup> {totalPrice()}
             </label>
-            <button className="checkout-btn">
+            <button className="checkout-btn" aria-label="Ir al checkout">
               <Link className="check" to="/checkout">
-                checkout
+                Checkout
               </Link>
             </button>
           </div>
@@ -118,4 +117,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
